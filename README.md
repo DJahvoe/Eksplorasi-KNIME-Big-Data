@@ -143,7 +143,7 @@ _Flow process yang dilakukan pada tahap ini sama dengan bagian 03 DB Modelling d
 # Hadoop
 
 ## 00 Setup Hive Table
-
+![hivesteupworkflow](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/00_Setup_Hive_Table/workflow.jpg)
 ### Penjelasan Fungsi Node:
 
 - **Create Temp Dir**: digunakan untuk membuat directory sementara saat dijalankan dan menyimpan directory tersebut dalam _flow variable_.
@@ -166,18 +166,23 @@ _Flow process yang dilakukan pada tahap ini sama dengan bagian 03 DB Modelling d
 #### Uji coba menggunakan DBeaver
 
 1. Membuat koneksi baru dengan membuka menu **New Database Connection**
-2. Memilih database **Apache Hive**
+![newdbconnection](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/00_Setup_Hive_Table/new%20db%20connection.jpg)
+2. Memilih database **Apache Hive**<br />
+![apachehive](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/00_Setup_Hive_Table/connect%20to%20db.jpg)
 3. Kembali ke KNIME, pada **Create Local Big Data Environment** buka **Hive Connection**
-4. Kembali ke DBeaver, masukan port yang tertulis pada URL **Hive Connection** dan klik 'Finish'
+![hiveconnection](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/00_Setup_Hive_Table/hive%20connection%20url.jpg)
+4. Kembali ke DBeaver, masukan port yang tertulis pada URL **Hive Connection** dan klik 'Finish'<br />
+![port](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/00_Setup_Hive_Table/apache%20hive%20connection.jpg)
 5. Apabila koneksi telah berhasil, uji coba query tabel seperti **SELECT \* FROM 05111740000130_ss13pme LIMIT 10**
 6. Apabila tabel berhasil di-load, maka hasil query akan muncul
+![successquery](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/00_Setup_Hive_Table/query%20success.jpg)
 
 ## 01 Hive Modelling
-
+![hivemodelling](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/01_Hive_Modelling/workflow.jpg)
 _Node dan flow process yang dilakukan pada tahap ini sama dengan bagian DB/03 DB Modelling, perbedaannya pada Hive Modelling koneksi database yang digunakan adalah **Hive Connection** dan bukan **SQLite Connection**_
 
 ## 02 Hive WritingToDB
-
+![hivewritingtodb](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/2_Hadoop/02_Hive_WritingToDB/workflow.jpg)
 _Node dan flow process yang dilakukan pada tahap ini sama dengan bagian 01 Hive Modelling dengan tambahan sebagai berikut_
 
 ### Tambahan Node:
