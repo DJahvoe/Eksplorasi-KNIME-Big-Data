@@ -1,7 +1,8 @@
 # DB
 
 ## 00 Regenerate ss13me tables (data preparation)
-
+![regenerate workflow](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/00_Regenerate_ss13me_tables/workflow.jpg)
+![Sqlite connector](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/00_Regenerate_ss13me_tables/sqlite%20connector.jpg)
 ### Penjelasan Fungsi Node:
 
 - **SQLite Connector**: digunakan untuk membuat suatu koneksi pada SQLite database file dengan perantara JDBC.
@@ -18,7 +19,7 @@
 4. Insert data ke dalam database menggunakan **DB Writer**
 
 ## 01 DB Connect
-
+![dbconnect workflow](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/01_DB_Connect/workflow.jpg)
 ### Penjelasan Fungsi Node:
 
 - **SQLite Connector**: digunakan untuk membuat suatu koneksi pada SQLite database file dengan perantara JDBC.
@@ -26,13 +27,13 @@
 - **DB Reader**: digunakan untuk membaca _input query_ dan membuat tabel dalam bentuk hasil query.
 
 ### Penjelasan Flow Process:
-
 1. Melakukan koneksi database menggunakan **SQLite Connector**
 2. Melakukan select data dari tabel menggunakan **DB Table Selector**
+![hasilquery](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/01_DB_Connect/hasil%20query.jpg)
 3. Membaca hasil query menggunakan **DB Reader**
 
 ## 02 DB InDB Processing
-
+![indb workflow](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/02_DB_InDB_Processing/workflow.jpg)
 ### Penjelasan Fungsi Node:
 
 - **SQLite Connector**: digunakan untuk membuat suatu koneksi pada SQLite database file dengan perantara JDBC.
@@ -52,34 +53,36 @@
    2. Melakukan select data dari tabel _0511174000130_ss13pme_ dan _0511174000130_ss13hme_ menggunakan **DB Table Selector**
    3. Menghapus kolom PUMA* dan PWGTP* dari tabel _0511174000130_ss13pme_ dan _0511174000130_ss13hme_ menggunakan **DB Column Filter**
 
-1. **Join ss13hme and ss13pme on SERIALNO**
+1. **Join ss13hme and ss13pme on SERIALNO**<br />
+![innerjoin](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/02_DB_InDB_Processing/1.%20inner%20join.jpg)
 
    1. Menggabungkan hasil filter dari kedua tabel menggunakan **DB Joiner** sesuai dengan data _serialno_
    2. Membaca hasil query menggunakan **DB Reader**
 
-1. **filter all rows from ss13pme where COW is NULL**
-
+1. **filter all rows from ss13pme where COW is NULL**<br />
+![cowisnull](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/02_DB_InDB_Processing/2.%20filter%20COW%20NOT%20NULL.jpg)
    1. Menghilangkan seluruh baris yang tidak memiliki data pada kolom _COW_ menggunakan **DB Row Filter**
    2. Membaca hasil query menggunakan **DB Reader**
 
-1. **filter all rows from ss13pme where COW is NOT NULL**
-
+1. **filter all rows from ss13pme where COW is NOT NULL**<br />
+![cowisnotnull](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/02_DB_InDB_Processing/3.%20filter%20COW%20NULL.jpg)
    1. Menghilangkan seluruh baris yang memiliki data pada kolom _COW_ menggunakan **DB Row Filter**
    2. Membaca hasil query menggunakan **DB Reader**
 
-1. **calculate average AGEP for the different SEX groups**
-
+1. **calculate average AGEP for the different SEX groups**<br />
+![averageagep](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/02_DB_InDB_Processing/4.%20average%20AGEP.jpg)
    1. Dalam konfigurasi "Groups" **DB GroupBy** memilih group column untuk kolom _sex_
    2. Dalam konfigurasi "Manual Aggregation" **DB GroupBy** memilih agregasi _AVG_ untuk kolom _agep_
    3. Membaca hasil query menggunakan **DB Reader**
 
-1. **Sort the data rows by descending AGEP and extract top 10 only**
+1. **Sort the data rows by descending AGEP and extract top 10 only**<br />
+![descendingagep](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/02_DB_InDB_Processing/5.%20descending%20AGEP.jpg)
    1. Menggunakan **DB Sorter** dengan konfigurasi "Descending"
    2. Melakukan limit 10 data teratas menggunakan **DB Query** dengan SQL Statement (SELECT \* FROM #table# AS "table" limit 10)
    3. Membaca hasil query menggunakan **DB Reader**
 
 ## 03 DB Modelling
-
+![dbmodelling](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/03_DB_Modelling/workflow.jpg)
 ### Penjelasan Fungsi Node:
 
 - **SQLite Connector**: digunakan untuk membuat suatu koneksi pada SQLite database file dengan perantara JDBC.
@@ -99,18 +102,21 @@
    2. Melakukan select data dari tabel _0511174000130_ss13pme_ menggunakan **DB Table Selector**
    3. Menghapus kolom PUMA* dan PWGTP* dari tabel _0511174000130_ss13pme_ menggunakan **DB Column Filter**
 
-1. **Train a decision tree on COW where COW is NOT NULL**
+1. **Train a decision tree on COW where COW is NOT NULL**<br />
+![traindt](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/03_DB_Modelling/1.%20train%20decision%20tree.jpg)
 
    1. Menghilangkan seluruh baris yang tidak memiliki data pada kolom _COW_ menggunakan **DB Row Filter**
    2. Konversi data pada kolom _COW_ menjadi string menggunakan **Number To String**
    3. Training data menggunakan **Decision Tree Learner**
 
-1. **apply decision tree to predict COW value on rows with MISSING COW value**
+1. **apply decision tree to predict COW value on rows with MISSING COW value**<br />
+![predictdt](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/03_DB_Modelling/2.%20apply%20decision%20tree.jpg)
    1. Menghilangkan seluruh baris yang memiliki data pada kolom _COW_ menggunakan **DB Row Filter** dan menghapus kolom _COW_ menggunakan **DB Column Filter**
    2. Membaca hasil query menggunakan **DB Reader**
    3. Melakukan prediction menggunakan **Decision Tree Predictor**
 
 ## 04 DB WritingToDB
+![dbwritingtodb](https://github.com/DJahvoe/Eksplorasi-KNIME-Big-Data/blob/master/Dokumentasi/1_DB/04_DB_WritingToDB/node%20tambahan.jpg)
 
 ### Penjelasan Fungsi Node:
 
